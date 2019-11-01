@@ -26,20 +26,19 @@ export class AdminComponent implements OnInit {
     this.musicList$ = this.store.pipe(select('musics'));
     this.currentMusicList$ = this.store.pipe(select('currentMusics'))
 
+    this.currentMusicList$.subscribe((data) => {
+      if (data.length === 1 && this.player) {
+        this.player.loadVideoById(data[0].id);
+      }
+    });
     this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
     this.socketService.listen('add-music')
       .subscribe((data) => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
-        if (data.length === 1) {
-          this.player.loadVideoById(data[0].id);
-        }
       });
     this.socketService.listen('next-music')
       .subscribe((data) => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
-        if (data.length > 0) {
-          this.player.loadVideoById(data[0].id);
-        }
       });
 
     this.socketService.listen('remove-music')
@@ -70,10 +69,10 @@ export class AdminComponent implements OnInit {
   savePlayer(player: any) {
     this.player = player;
     this.currentMusicList$.subscribe((data) => {
-      if (data && data.length === 1) {
+      if (data.length === 1) {
         this.player.loadVideoById(data[0].id);
       }
-    })
+    });
   }
 
   onStateChange(event: any) {
