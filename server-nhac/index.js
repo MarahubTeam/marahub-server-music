@@ -60,9 +60,14 @@ io.on('connection', function(socket){
         io.emit('add-music', videos);
     });
 
-    socket.on('remove-music', function(music) {
+    socket.on('next-music', function(music) {
         videos.shift();
-        io.emit('remove-music', videos);
+        io.emit('next-music', videos);
+    });
+
+    socket.on('remove-music', function(index) {
+      videos.splice(index, 1);
+      io.emit('remove-music', videos);
     });
 });
 

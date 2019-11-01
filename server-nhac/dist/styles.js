@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n.active-music {\n  border: 1px solid #007bff !important;\n}\nh5.card-title {\n  font-size: 1rem;\n}\niframe {\n  display: block;\n  margin: auto;\n  max-width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9EOlxcTWFyYWh1YlxcbG9jYWxcXG1yaC1zZXJ2ZXItbXVzaWNcXHNlcnZlci1tdXNpYy9zcmNcXHN0eWxlcy5zY3NzIiwic3JjL3N0eWxlcy5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDhFQUFBO0FBQ0E7RUFDSSxvQ0FBQTtBQ0NKO0FEQ0E7RUFDSSxlQUFBO0FDRUo7QURDQTtFQUNJLGNBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtBQ0VKIiwiZmlsZSI6InNyYy9zdHlsZXMuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIFlvdSBjYW4gYWRkIGdsb2JhbCBzdHlsZXMgdG8gdGhpcyBmaWxlLCBhbmQgYWxzbyBpbXBvcnQgb3RoZXIgc3R5bGUgZmlsZXMgKi9cclxuLmFjdGl2ZS1tdXNpYyB7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2IoMCwgMTIzLCAyNTUpIWltcG9ydGFudDtcclxufVxyXG5oNS5jYXJkLXRpdGxlIHtcclxuICAgIGZvbnQtc2l6ZTogMXJlbTtcclxufVxyXG5cclxuaWZyYW1lIHtcclxuICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgbWFyZ2luOiBhdXRvO1xyXG4gICAgbWF4LXdpZHRoOiAxMDAlO1xyXG59IiwiLyogWW91IGNhbiBhZGQgZ2xvYmFsIHN0eWxlcyB0byB0aGlzIGZpbGUsIGFuZCBhbHNvIGltcG9ydCBvdGhlciBzdHlsZSBmaWxlcyAqL1xuLmFjdGl2ZS1tdXNpYyB7XG4gIGJvcmRlcjogMXB4IHNvbGlkICMwMDdiZmYgIWltcG9ydGFudDtcbn1cblxuaDUuY2FyZC10aXRsZSB7XG4gIGZvbnQtc2l6ZTogMXJlbTtcbn1cblxuaWZyYW1lIHtcbiAgZGlzcGxheTogYmxvY2s7XG4gIG1hcmdpbjogYXV0bztcbiAgbWF4LXdpZHRoOiAxMDAlO1xufSJdfQ== */", '', '']]
+module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n.active-music {\n  border: 1px solid #007bff !important;\n}\nh5.card-title {\n  font-size: 1rem;\n}\niframe {\n  display: block;\n  margin: auto;\n  max-width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9EOlxcTWFyYWh1YlxccHJvZHVjdHNcXHNlcnZlci1tdXNpY1xcc2VydmVyLW11c2ljL3NyY1xcc3R5bGVzLnNjc3MiLCJzcmMvc3R5bGVzLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsOEVBQUE7QUFDQTtFQUNJLG9DQUFBO0FDQ0o7QURDQTtFQUNJLGVBQUE7QUNFSjtBRENBO0VBQ0ksY0FBQTtFQUNBLFlBQUE7RUFDQSxlQUFBO0FDRUoiLCJmaWxlIjoic3JjL3N0eWxlcy5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogWW91IGNhbiBhZGQgZ2xvYmFsIHN0eWxlcyB0byB0aGlzIGZpbGUsIGFuZCBhbHNvIGltcG9ydCBvdGhlciBzdHlsZSBmaWxlcyAqL1xyXG4uYWN0aXZlLW11c2ljIHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYigwLCAxMjMsIDI1NSkhaW1wb3J0YW50O1xyXG59XHJcbmg1LmNhcmQtdGl0bGUge1xyXG4gICAgZm9udC1zaXplOiAxcmVtO1xyXG59XHJcblxyXG5pZnJhbWUge1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBtYXJnaW46IGF1dG87XHJcbiAgICBtYXgtd2lkdGg6IDEwMCU7XHJcbn0iLCIvKiBZb3UgY2FuIGFkZCBnbG9iYWwgc3R5bGVzIHRvIHRoaXMgZmlsZSwgYW5kIGFsc28gaW1wb3J0IG90aGVyIHN0eWxlIGZpbGVzICovXG4uYWN0aXZlLW11c2ljIHtcbiAgYm9yZGVyOiAxcHggc29saWQgIzAwN2JmZiAhaW1wb3J0YW50O1xufVxuXG5oNS5jYXJkLXRpdGxlIHtcbiAgZm9udC1zaXplOiAxcmVtO1xufVxuXG5pZnJhbWUge1xuICBkaXNwbGF5OiBibG9jaztcbiAgbWFyZ2luOiBhdXRvO1xuICBtYXgtd2lkdGg6IDEwMCU7XG59Il19 */", '', '']]
 
 /***/ }),
 
@@ -338,7 +338,7 @@ if (content.locals) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Marahub\local\mrh-server-music\server-music\src\styles.scss */"./src/styles.scss");
+module.exports = __webpack_require__(/*! D:\Marahub\products\server-music\server-music\src\styles.scss */"./src/styles.scss");
 
 
 /***/ })
