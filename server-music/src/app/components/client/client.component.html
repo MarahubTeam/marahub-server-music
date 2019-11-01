@@ -1,0 +1,54 @@
+<div class="container" style="margin-top:30px">
+    <div class="pricing-header mx-auto text-center">
+        <h1 class="display-4">Âm Nhạc và Cuộc Sống</h1>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <form name="addMusic" (ngSubmit)="search()">
+                <div class="input-group mb-2">
+                    <input [(ngModel)]="music" name="music" class="form-control" placeholder="Tìm gì cũng được">
+                    <span class="mdi mdi-magnify"></span>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <p *ngIf="(currentMusicList$ | async).length > 1">
+                <button (click)="next()" class="btn btn-primary my-2">Next</button>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="card shadow-sm mb-1" *ngFor="let music of musicList$ | async">
+                <div class="card-body">
+                    <h5 class="card-title pricing-card-title">{{ music.title }} <small class="text-muted">/
+                            {{ music.duration }}</small></h5>
+                    <div class="text-center">
+                        <img class="img-thumbnail" [src]="music.thumbnails.default.url" (click)="add(music)">
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-primary" (click)="add(music)">Add</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="card shadow-sm mb-2" *ngFor="let music of (currentMusicList$ | async); let i = index"
+                [ngClass]="{'active-music': i === 0}">
+                <div class="card-body">
+                    <button type="button" class="close" *ngIf="i > 0" (click)="remove(i)">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="card-title pricing-card-title">{{ music.title }} <small class="text-muted">/
+                            {{ music.duration }}</small></h5>
+                    <div class="text-center">
+                        <img [src]="music.thumbnails.default.url">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
