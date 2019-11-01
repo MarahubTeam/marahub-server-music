@@ -588,7 +588,7 @@ let AdminComponent = class AdminComponent {
     savePlayer(player) {
         this.player = player;
         this.currentMusicList$.subscribe((data) => {
-            if (data) {
+            if (data && data.length === 1) {
                 this.player.loadVideoById(data[0].id);
             }
         });
