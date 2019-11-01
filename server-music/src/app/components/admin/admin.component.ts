@@ -39,6 +39,9 @@ export class AdminComponent implements OnInit {
     this.socketService.listen('next-music')
       .subscribe((data) => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
+        if (data.length > 0 && this.player) {
+          this.player.loadVideoById(data[0].id);
+        }
       });
 
     this.socketService.listen('remove-music')

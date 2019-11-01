@@ -547,8 +547,6 @@ let AdminComponent = class AdminComponent {
         this.socketService = socketService;
         this.url = '';
     }
-    ngAfterViewInit() {
-    }
     ngOnInit() {
         this.musicList$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["select"])('musics'));
         this.currentMusicList$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["select"])('currentMusics'));
@@ -565,6 +563,9 @@ let AdminComponent = class AdminComponent {
         this.socketService.listen('next-music')
             .subscribe((data) => {
             this.store.dispatch(_action_current_action__WEBPACK_IMPORTED_MODULE_4__["ListCurrentMusicAction"]());
+            if (data.length > 0 && this.player) {
+                this.player.loadVideoById(data[0].id);
+            }
         });
         this.socketService.listen('remove-music')
             .subscribe(() => {
