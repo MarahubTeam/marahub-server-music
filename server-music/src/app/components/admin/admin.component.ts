@@ -45,8 +45,11 @@ export class AdminComponent implements OnInit {
       });
 
     this.socketService.listen('remove-music')
-      .subscribe(() => {
+      .subscribe((data) => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
+        if (data.length > 1 && this.player) {
+          this.player.loadVideoById(data[0].id);
+        }
       });
   }
 
