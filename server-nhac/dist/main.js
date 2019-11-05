@@ -568,8 +568,11 @@ let AdminComponent = class AdminComponent {
             }
         });
         this.socketService.listen('remove-music')
-            .subscribe(() => {
+            .subscribe((data) => {
             this.store.dispatch(_action_current_action__WEBPACK_IMPORTED_MODULE_4__["ListCurrentMusicAction"]());
+            if (data.length > 1 && this.player) {
+                this.player.loadVideoById(data[0].id);
+            }
         });
     }
     add(music) {
