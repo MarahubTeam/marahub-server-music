@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   music: string;
   player: YT.Player;
   url: string = '';
+  isPlaying = false;
 
   constructor(private store: Store<Music[]>, private socketService: SocketService) {
 
@@ -24,13 +25,8 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.musicList$ = this.store.pipe(select('musics'));
-    this.currentMusicList$ = this.store.pipe(select('currentMusics'))
+    this.currentMusicList$ = this.store.pipe(select('currentMusics'));
 
-    this.currentMusicList$.subscribe((data) => {
-      if (data.length === 1 && this.player) {
-        this.player.loadVideoById(data[0].id);
-      }
-    });
     this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
     this.socketService.listen('add-music')
       .subscribe((data) => {
@@ -38,18 +34,13 @@ export class AdminComponent implements OnInit {
       });
     this.socketService.listen('next-music')
       .subscribe((data) => {
+        this.isPlaying = false;
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
-        if (data.length > 0 && this.player) {
-          this.player.loadVideoById(data[0].id);
-        }
       });
 
     this.socketService.listen('remove-music')
-      .subscribe((data) => {
+      .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
-        if (data.length > 1 && this.player) {
-          this.player.loadVideoById(data[0].id);
-        }
       });
   }
 
@@ -64,8 +55,8 @@ export class AdminComponent implements OnInit {
     this.store.dispatch(MusicActions.GetMusicAction({ id: this.music }));
   }
 
-  remove() {
-    this.socketService.emit('remove-music');
+  remove(i: any) {
+    this.socketService.emit('remove-music', i);
   }
 
   next() {
@@ -74,16 +65,19 @@ export class AdminComponent implements OnInit {
 
   savePlayer(player: any) {
     this.player = player;
+
     this.currentMusicList$.subscribe((data) => {
-      if (data.length === 1) {
+      if (data.length > 0 && this.player && !this.isPlaying) {
         this.player.loadVideoById(data[0].id);
+        this.isPlaying = true;
       }
     });
   }
 
   onStateChange(event: any) {
     if (event.data == 0) {
-      this.remove();
+      this.isPlaying = false;
+      this.next();
     }
   }
 

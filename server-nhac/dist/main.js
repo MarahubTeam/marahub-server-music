@@ -45,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\" style=\"margin-top:30px\">\r\n    <div class=\"pricing-header mx-auto text-center\">\r\n        <h1 class=\"display-4\">Âm Nhạc và Cuộc Sống</h1>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-5\">\r\n            <form name=\"addMusic\" (ngSubmit)=\"search()\">\r\n                <div class=\"input-group mb-2\">\r\n                    <input [(ngModel)]=\"music\" name=\"music\" class=\"form-control\" placeholder=\"Tìm gì cũng được\">\r\n                    <span class=\"mdi mdi-magnify\"></span>\r\n                    <div class=\"input-group-append\">\r\n                        <button class=\"btn btn-primary\" type=\"submit\">Search</button>\r\n                    </div>\r\n                </div>\r\n            </form>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-5\">\r\n            <div class=\"card shadow-sm mb-1\" *ngFor=\"let music of musicList$ | async\">\r\n                <div class=\"card-body\">\r\n                    <h5 class=\"card-title pricing-card-title\">{{ music.title }} <small class=\"text-muted\">/\r\n                            {{ music.duration }}</small></h5>\r\n                    <div class=\"text-center\">\r\n                        <img class=\"img-thumbnail\" [src]=\"music.thumbnails.default.url\" (click)=\"add(music)\">\r\n                    </div>\r\n                    <button type=\"button\" class=\"btn btn-sm btn-outline-primary\" (click)=\"add(music)\">Add</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-2\"></div>\r\n        <div class=\"col-5\">\r\n            <youtube-player [videoId]=\"''\" (ready)=\"savePlayer($event)\" (change)=\"onStateChange($event)\">\r\n            </youtube-player>\r\n            <p>\r\n                <button *ngIf=\"(currentMusicList$ | async)[1]\" (click)=\"next()\"\r\n                    class=\"btn btn-primary my-2\">Next</button>\r\n            </p>\r\n            <div class=\"card shadow-sm mb-2\" *ngFor=\"let music of (currentMusicList$ | async); let i = index\"\r\n                [ngClass]=\"{'active-music': i === 0}\">\r\n                <div class=\"card-body\">\r\n                    <button type=\"button\" class=\"close\" *ngIf=\"i > 0\" (click)=\"remove(i)\">\r\n                        <span aria-hidden=\"true\">×</span>\r\n                    </button>\r\n                    <h5 class=\"card-title pricing-card-title\">{{ music.title }} <small class=\"text-muted\">/\r\n                            {{ music.duration }}</small></h5>\r\n                    <div class=\"text-center\">\r\n                        <img [src]=\"music.thumbnails.default.url\">\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\" style=\"margin-top:30px\">\r\n    <div class=\"pricing-header mx-auto text-center\">\r\n        <h1 class=\"display-4\">Âm Nhạc và Cuộc Sống</h1>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-5\">\r\n            <form name=\"addMusic\" (ngSubmit)=\"search()\">\r\n                <div class=\"input-group mb-2\">\r\n                    <input [(ngModel)]=\"music\" name=\"music\" class=\"form-control\" placeholder=\"Tìm gì cũng được\">\r\n                    <span class=\"mdi mdi-magnify\"></span>\r\n                    <div class=\"input-group-append\">\r\n                        <button class=\"btn btn-primary\" type=\"submit\">Search</button>\r\n                    </div>\r\n                </div>\r\n            </form>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-5\">\r\n            <div class=\"card shadow-sm mb-1\" *ngFor=\"let music of musicList$ | async\">\r\n                <div class=\"card-body\">\r\n                    <h5 class=\"card-title pricing-card-title\">{{ music.title }} <small class=\"text-muted\">/\r\n                            {{ music.duration }}</small></h5>\r\n                    <div class=\"text-center\">\r\n                        <img class=\"img-thumbnail\" [src]=\"music.thumbnails.default.url\" (click)=\"add(music)\">\r\n                    </div>\r\n                    <button type=\"button\" class=\"btn btn-sm btn-outline-primary\" (click)=\"add(music)\">Add</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-2\"></div>\r\n        <div class=\"col-5\">\r\n            <youtube-player [videoId]=\"url\" (ready)=\"savePlayer($event)\" (change)=\"onStateChange($event)\">\r\n            </youtube-player>\r\n            <p>\r\n                <button *ngIf=\"(currentMusicList$ | async)[1]\" (click)=\"next()\"\r\n                    class=\"btn btn-primary my-2\">Next</button>\r\n            </p>\r\n            <div class=\"card shadow-sm mb-2\" *ngFor=\"let music of (currentMusicList$ | async); let i = index\"\r\n                [ngClass]=\"{'active-music': i === 0}\">\r\n                <div class=\"card-body\">\r\n                    <button type=\"button\" class=\"close\" *ngIf=\"i > 0\" (click)=\"remove(i)\">\r\n                        <span aria-hidden=\"true\">×</span>\r\n                    </button>\r\n                    <h5 class=\"card-title pricing-card-title\">{{ music.title }} <small class=\"text-muted\">/\r\n                            {{ music.duration }}</small></h5>\r\n                    <div class=\"text-center\">\r\n                        <img [src]=\"music.thumbnails.default.url\">\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
 
 /***/ }),
 
@@ -546,15 +546,11 @@ let AdminComponent = class AdminComponent {
         this.store = store;
         this.socketService = socketService;
         this.url = '';
+        this.isPlaying = false;
     }
     ngOnInit() {
         this.musicList$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["select"])('musics'));
         this.currentMusicList$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["select"])('currentMusics'));
-        this.currentMusicList$.subscribe((data) => {
-            if (data.length === 1 && this.player) {
-                this.player.loadVideoById(data[0].id);
-            }
-        });
         this.store.dispatch(_action_current_action__WEBPACK_IMPORTED_MODULE_4__["ListCurrentMusicAction"]());
         this.socketService.listen('add-music')
             .subscribe((data) => {
@@ -562,17 +558,12 @@ let AdminComponent = class AdminComponent {
         });
         this.socketService.listen('next-music')
             .subscribe((data) => {
+            this.isPlaying = false;
             this.store.dispatch(_action_current_action__WEBPACK_IMPORTED_MODULE_4__["ListCurrentMusicAction"]());
-            if (data.length > 0 && this.player) {
-                this.player.loadVideoById(data[0].id);
-            }
         });
         this.socketService.listen('remove-music')
-            .subscribe((data) => {
+            .subscribe(() => {
             this.store.dispatch(_action_current_action__WEBPACK_IMPORTED_MODULE_4__["ListCurrentMusicAction"]());
-            if (data.length > 1 && this.player) {
-                this.player.loadVideoById(data[0].id);
-            }
         });
     }
     add(music) {
@@ -584,8 +575,8 @@ let AdminComponent = class AdminComponent {
         }
         this.store.dispatch(_action_music_action__WEBPACK_IMPORTED_MODULE_3__["GetMusicAction"]({ id: this.music }));
     }
-    remove() {
-        this.socketService.emit('remove-music');
+    remove(i) {
+        this.socketService.emit('remove-music', i);
     }
     next() {
         this.socketService.emit('next-music');
@@ -593,14 +584,16 @@ let AdminComponent = class AdminComponent {
     savePlayer(player) {
         this.player = player;
         this.currentMusicList$.subscribe((data) => {
-            if (data.length === 1) {
+            if (data.length > 0 && this.player && !this.isPlaying) {
                 this.player.loadVideoById(data[0].id);
+                this.isPlaying = true;
             }
         });
     }
     onStateChange(event) {
         if (event.data == 0) {
-            this.remove();
+            this.isPlaying = false;
+            this.next();
         }
     }
 };

@@ -30,7 +30,7 @@
         </div>
         <div class="col-2"></div>
         <div class="col-5">
-            <youtube-player [videoId]="''" (ready)="savePlayer($event)" (change)="onStateChange($event)">
+            <youtube-player [videoId]="url" (ready)="savePlayer($event)" (change)="onStateChange($event)">
             </youtube-player>
             <p>
                 <button *ngIf="(currentMusicList$ | async)[1]" (click)="next()"
