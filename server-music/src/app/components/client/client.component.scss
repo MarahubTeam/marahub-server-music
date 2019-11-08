@@ -1,0 +1,83 @@
+.search-input {
+  color: #fff;
+  background: #121212;
+  border-color: #393939;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.btn-search {
+  background: #393939;
+  border-color: #393939;
+  height: 38px;
+  width: 75px;
+
+  svg {
+    fill: #ffffff80;
+  }
+
+  &:hover svg {
+    fill: #ffffffbb;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.nav {
+  background: #282828 !important;
+  padding: 10px;
+}
+
+.icon-searchbox {
+  width: 23px;
+  height: 23px;
+  display: inline-flex;
+}
+
+.music-item {
+  position: relative;
+  img {
+    width: 273px;
+    cursor: pointer;
+  }
+
+  .text-duration {
+    position: absolute;
+    background: #000;
+    border-radius: 2px;
+    padding: 2px;
+    color: #fff;
+    top: 131px;
+    left: 246px;
+    font-size: 70%;
+  }
+
+  .add-button {
+    position: absolute;
+    left: 239px;
+    top: 2px;
+    height: 32px;
+    width: 32px;
+    background: #000;
+    border-radius: 2px;
+    padding: 2px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: 1s all;
+  }
+
+  &:hover .add-button {
+    opacity: 1;
+  }
+}
+
+.current-list .music-item {
+  width: 273px;
+}

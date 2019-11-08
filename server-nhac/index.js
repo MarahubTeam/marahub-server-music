@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 
 var opts = {
-  maxResults: 10,
+  maxResults: 12,
   type: 'video',
   key: 'AIzaSyDaCfgczoORQA1jH6z1WU-vFcFvp52CRz8',
   metadata: {
