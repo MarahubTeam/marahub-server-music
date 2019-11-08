@@ -5,7 +5,7 @@ var path = require('path');
 var opts = {
   maxResults: 12,
   type: 'video',
-  key: 'AIzaSyDaCfgczoORQA1jH6z1WU-vFcFvp52CRz8',
+  key: 'AIzaSyA9reeS9AsFrRbfNI6xoJJKpIGw2vSrQJo',
   metadata: {
     duration: true,
     statistics: true
