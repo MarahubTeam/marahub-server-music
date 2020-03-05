@@ -14,6 +14,8 @@
     "express": "^4.16.4",
     "http": "0.0.0",
     "socket.io": "^2.3.0",
-    "youtube-search": "https://github.com/Spring3/youtube-search"
+    "axios": "^0.18.0",
+    "duration-iso-8601": "^1.1.0",
+    "xml2js": "~0.2.8"
   }
 }

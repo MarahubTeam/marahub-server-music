@@ -1,11 +1,11 @@
-var search = require('youtube-search');
+var search = require('./youtube-search');
 var bodyParser = require('body-parser');
 var path = require('path');
 
 var opts = {
   maxResults: 12,
   type: 'video',
-  key: 'AIzaSyDaCfgczoORQA1jH6z1WU-vFcFvp52CRz8',
+  key: 'AIzaSyDHH0fQzsUxIiZlpFOQyFaT2s3zBdP2UeA',
   metadata: {
     duration: true,
     statistics: true
