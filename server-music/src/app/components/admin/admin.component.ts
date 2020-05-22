@@ -44,6 +44,11 @@ export class AdminComponent implements OnInit {
       .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });
+
+    this.socketService.listen('clear-music')
+      .subscribe(() => {
+        this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
+      });
   }
 
   add(music: Music) {
@@ -63,6 +68,16 @@ export class AdminComponent implements OnInit {
 
   next() {
     this.socketService.emit('next-music');
+  }
+
+  clearAll() {
+    this.isPlaying = false;
+
+    if (this.player) {
+      this.player.loadVideoById('');
+    }
+
+    this.socketService.emit('clear-music');
   }
 
   savePlayer(player: any) {

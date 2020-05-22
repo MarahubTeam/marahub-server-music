@@ -10,5 +10,7 @@ export const RemoveCurrentMusicActionAPI = createAction('[CurrentMusic] - Remove
 export const ListCurrentMusicAction = createAction('[CurrentMusic] - List CurrentMusic');
 export const LisCurrentMusicActionAPI = createAction('[CurrentMusic] - List CurrentMusic Sucess', props<{ payload: any}>());
 
+export const ClearCurrentMusicAction = createAction('[CurrentMusic] - Clear CurrentMusic Success');
+
 export const SocketMusicAction = createAction('[Socket] - Add CurrentMusic', props<{ payload: any, event: string}>());
 

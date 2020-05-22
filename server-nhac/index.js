@@ -40,17 +40,17 @@ app.use(cors());
 
 // Add headers
 app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    // Pass to next layer of middleware
-    next();
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  // Pass to next layer of middleware
+  next();
 });
 
 /***************APIs ***************/
@@ -72,7 +72,7 @@ app.get('/api/trending', (req, res) => {
   const today = new Date();
   const currentDate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
 
-  // Get cache trending result on curren date
+  // Get cache trending result on current date
   if (trendingVideos.createdTime === currentDate && trendingVideos.items.length > 0) {
     return res.send(trendingVideos.items);
   }
@@ -107,7 +107,7 @@ io.on('connection', function(socket){
     io.emit('add-music', videos);
   });
 
-  socket.on('next-music', function(music) {
+  socket.on('next-music', function() {
     videos.shift();
     io.emit('next-music', videos);
   });
@@ -116,6 +116,11 @@ io.on('connection', function(socket){
     videos.splice(index, 1);
     io.emit('remove-music', videos);
   });
+
+  socket.on('clear-music', function() {
+    videos = [];
+    io.emit('clear-music', videos);
+  });
 });
 
-http.listen(port, () => console.log(`Example app listening on port ${port}!`))
+http.listen(port, () => console.log(`Example app listening on port ${port}!`));

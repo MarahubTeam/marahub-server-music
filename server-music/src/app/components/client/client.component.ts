@@ -29,7 +29,7 @@ export class ClientComponent implements OnInit {
     // Get list trending music (by default)
     this.getTrending();
 
-    // Get list current musics
+    // Get list current music
     this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
 
     this.socketService.listen('add-music')
@@ -43,6 +43,11 @@ export class ClientComponent implements OnInit {
       });
 
     this.socketService.listen('remove-music')
+      .subscribe(() => {
+        this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
+      });
+
+    this.socketService.listen('clear-music')
       .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });

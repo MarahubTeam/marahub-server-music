@@ -16,7 +16,10 @@ const currentReducer = createReducer(
     }),
     on(CurrentMusicActions.RemoveCurrentMusicAction, (state, { payload }) => {
         return state.filter(element => element !== payload);
-    })
+    }),
+    on(CurrentMusicActions.ClearCurrentMusicAction, (state) => {
+        return [];
+    }),
 );
 
 export function CurrentMusicReducer(state: currentState | undefined, action: Action) {
