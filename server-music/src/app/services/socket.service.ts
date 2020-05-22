@@ -31,7 +31,6 @@ export class SocketService {
 
   listen(event: string): Observable<any> {
     return new Observable( observer => {
-
       this.socket.on(event, data => {
 
         console.group();
@@ -42,6 +41,7 @@ export class SocketService {
 
         observer.next(data);
       });
+
       // dispose of the event listener when unsubscribed
       return () => this.socket.off(event);
     });

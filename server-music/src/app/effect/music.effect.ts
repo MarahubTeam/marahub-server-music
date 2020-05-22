@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
-import { MusicService } from '../services/music.service';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+
 import * as MusicActions from '../action/music.action';
 import * as CurrentActions from '../action/current.action';
-import { EMPTY } from 'rxjs';
+
+import { MusicService } from '../services/music.service';
 
 @Injectable()
 export class MusicEffects {
@@ -15,7 +18,21 @@ export class MusicEffects {
       mergeMap((action) => this.musicsService.search(action.id)
         .pipe(
           map(musics => {
-            return MusicActions.SearchMusicActionAPI({ payload: musics })
+            return MusicActions.SearchMusicActionAPI({ payload: musics });
+          }),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
+  getTrendingMusics$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MusicActions.GetTrendingAction),
+      mergeMap(() => this.musicsService.getTrendingList()
+        .pipe(
+          map(musics => {
+            return MusicActions.GetTrendingActionAPI({ payload: musics });
           }),
           catchError(() => EMPTY)
         )
@@ -29,7 +46,7 @@ export class MusicEffects {
       mergeMap(() => this.musicsService.getlist()
         .pipe(
           map(musics => {
-            return CurrentActions.LisCurrentMusicActionAPI({ payload: musics })
+            return CurrentActions.LisCurrentMusicActionAPI({ payload: musics });
           }),
           catchError(() => EMPTY)
         )

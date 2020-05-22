@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
 import * as MusicActions from '../../action/music.action';
 import * as CurrentMusicActions from '../../action/current.action';
 import Music from '../../model/music.model';
+
 import { SocketService } from '../../services/socket.service';
 
 @Component({
@@ -15,20 +18,21 @@ export class ClientComponent implements OnInit {
   musicList$: Observable<Music[]>;
   currentMusicList$: Observable<Music[]>;
   music: string;
-  url: string = '';
+  url = '';
 
-  constructor(private store: Store<Music[]>, private socketService: SocketService) {
-  }
+  constructor(private store: Store<Music[]>, private socketService: SocketService) { }
 
   ngOnInit() {
     this.musicList$ = this.store.pipe(select('musics'));
-    this.currentMusicList$ = this.store.pipe(select('currentMusics'))
+    this.currentMusicList$ = this.store.pipe(select('currentMusics'));
 
-    this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
+    this.getTrending();
+
     this.socketService.listen('add-music')
       .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });
+
     this.socketService.listen('next-music')
       .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
@@ -57,5 +61,9 @@ export class ClientComponent implements OnInit {
       return;
     }
     this.store.dispatch(MusicActions.GetMusicAction({ id: this.music }));
+  }
+
+  getTrending() {
+    this.store.dispatch(MusicActions.GetTrendingAction());
   }
 }

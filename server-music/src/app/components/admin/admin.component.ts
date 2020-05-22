@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   currentMusicList$: Observable<Music[]>;
   music: string;
   player: YT.Player;
-  url: string = '';
+  url = '';
   isPlaying = false;
 
   constructor(private store: Store<Music[]>, private socketService: SocketService) {
@@ -28,10 +28,12 @@ export class AdminComponent implements OnInit {
     this.currentMusicList$ = this.store.pipe(select('currentMusics'));
 
     this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
+
     this.socketService.listen('add-music')
       .subscribe((data) => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });
+
     this.socketService.listen('next-music')
       .subscribe((data) => {
         this.isPlaying = false;

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MusicService {
-  url: string = '/api/';
+  url = '/api/';
   constructor(private http: HttpClient) { }
 
   search(text: string) {
@@ -14,6 +14,10 @@ export class MusicService {
 
   getlist() {
     return this.http.get(`${this.url}list`);
+  }
+
+  getTrendingList() {
+    return this.http.get(`${this.url}trending`);
   }
 
   addMusic(music: any) {

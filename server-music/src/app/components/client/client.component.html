@@ -4,7 +4,7 @@
         <input [(ngModel)]="music" name="music" class="search-input form-control rounded-0" placeholder="Tìm gì cũng được">
         <span class="mdi mdi-magnify"></span>
         <div class="input-group-append">
-            <button class="btn-search btn btn-primary rounded-0" type="submit" tooltip="Tìm kiếm" placement="bottom">
+            <button class="btn-header-action btn-search btn btn-primary rounded-0" type="submit" tooltip="Tìm kiếm" placement="bottom">
               <i class="style-scope icon-searchbox"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope i" style="pointer-events: none; display: block; width: 100%; height: 100%;   "><g class="style-scope">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" class="style-scope yt-icon"></path>
               </g></svg>
@@ -13,13 +13,20 @@
         </div>
     </div>
   </form>
+
+  <button class="btn-header-action btn btn-primary rounded-0" tooltip="Thịnh hành" placement="bottom" (click)="getTrending()">
+    <svg class="bi bi-music-note-beamed" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z"/>
+      <path fill-rule="evenodd" d="M14 11V2h1v9h-1zM6 3v10H5V3h1z" clip-rule="evenodd"/>
+      <path d="M5 2.905a1 1 0 01.9-.995l8-.8a1 1 0 011.1.995V3L5 4V2.905z"/>
+    </svg>
+  </button>
 </nav>
 
 <div class="container-fluid mt-2">
     <div class="row">
         <div class="col-9">
           <h4 class="pt-2 pb-2">Âm nhạc và cuộc sống</h4>
-         
             <div class="music-item mb-5 d-flex flex-row" *ngFor="let music of musicList$ | async">
                 <img [src]="music.thumbnails.medium.url">
                 <small class="text-duration">{{ music.duration }}</small>
@@ -33,7 +40,7 @@
                 <div class="ml-2">
                   <h5 class="mb-0">{{ music.title }}</h5>
                   <div class="text-muted small">{{ music.channelTitle }}</div>
-                  <div class="text-muted pt-3">{{ music.description }}</div>
+                  <div class="text-muted pt-3">{{ music.description | words : 20 }}</div>
                 </div>
             </div>
 

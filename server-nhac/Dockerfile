@@ -6,8 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+# COPY . .
 
-EXPOSE 4444
-
-CMD ["node", "index.js"]
+# CMD ["node", "index.js"]
+CMD ["ls", "/usr/src/app"]
