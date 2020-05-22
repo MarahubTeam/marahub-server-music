@@ -9,4 +9,3 @@ RUN npm install
 # COPY . .
 
 CMD ["node", "index.js"]
-# CMD ["ls", "/usr/src/app"]

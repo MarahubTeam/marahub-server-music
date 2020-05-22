@@ -7,7 +7,7 @@ services:
     container_name: marahub_music
     volumes:
       - ./server-nhac:/usr/src/app
-      - /usr/src/app/node_modules
+      - /usr/src/app/node_modules     # Keep node_modules exist in /usr/src/app/ folder from overwriting from host machine (./server-nhac)
     ports:
       - '4444:4444'
     networks:

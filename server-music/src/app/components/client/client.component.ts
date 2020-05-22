@@ -26,7 +26,11 @@ export class ClientComponent implements OnInit {
     this.musicList$ = this.store.pipe(select('musics'));
     this.currentMusicList$ = this.store.pipe(select('currentMusics'));
 
+    // Get list trending music (by default)
     this.getTrending();
+
+    // Get list current musics
+    this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
 
     this.socketService.listen('add-music')
       .subscribe(() => {
