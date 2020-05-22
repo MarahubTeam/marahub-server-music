@@ -6,7 +6,7 @@ var getYoutubeData = require('./youtube-search');
 var opts = {
   maxResults: 12,
   type: 'video',
-  key: 'AIzaSyDHH0fQzsUxIiZlpFOQyFaT2s3zBdP2UeA',
+  key: 'AIzaSyByo67dJBk09JBH0VK5MXGAeFyp6a9Bat8',
   metadata: {
     duration: true,
     statistics: true

@@ -19,7 +19,8 @@
         <div class="col-5">
             <div class="card shadow-sm mb-1" *ngFor="let music of musicList$ | async">
                 <div class="card-body">
-                    <h5 class="card-title pricing-card-title text-muted">{{ music.title }} <small>/{{ music.duration }}</small></h5>
+                    <h5 class="card-title pricing-card-title">{{ music.title }} <small class="text-muted">/
+                        {{ music.duration }}</small></h5>
                     <div class="text-center">
                         <img class="img-thumbnail" [src]="music.thumbnails.default.url" (click)="add(music)">
                     </div>
@@ -41,8 +42,7 @@
                     <button type="button" class="close" *ngIf="i > 0" (click)="remove(i)">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <h5 class="card-title pricing-card-title">{{ music.title }} <small class="text-muted">/
-                            {{ music.duration }}</small></h5>
+                    <h5 class="card-title pricing-card-title text-muted">{{ music.title }} <small>/{{ music.duration }}</small></h5>
                     <div class="text-center">
                         <img [src]="music.thumbnails.default.url">
                     </div>

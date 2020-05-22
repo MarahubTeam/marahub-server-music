@@ -218,6 +218,12 @@ module.exports = function getYoutubeData (opts, type, params, cb) {
             break;
         }
 
+        // Handle for popular videos (trending)
+        if (item.kind === 'youtube#video') {
+          link = 'https://www.youtube.com/watch?v=' + item.id;
+          id = item.id;
+        }
+
         return {
           id: id,
           link: link,
