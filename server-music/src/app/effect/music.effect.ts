@@ -40,6 +40,20 @@ export class MusicEffects {
     )
   );
 
+  getFrequentList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MusicActions.GetFrequentListAction),
+      mergeMap(() => this.musicsService.getFrequentList()
+        .pipe(
+          map(musics => {
+            return MusicActions.GetFrequentListActionAPI({ payload: musics });
+          }),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
   loadMusics$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CurrentActions.ListCurrentMusicAction),

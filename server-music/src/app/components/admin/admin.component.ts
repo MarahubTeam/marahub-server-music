@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
 import * as MusicActions from '../../action/music.action';
 import * as CurrentMusicActions from '../../action/current.action';
 import Music from '../../model/music.model';
+
 import { SocketService } from '../../services/socket.service';
+import { MusicService } from '../../services/music.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,14 +17,17 @@ import { SocketService } from '../../services/socket.service';
 export class AdminComponent implements OnInit {
   musicList$: Observable<Music[]>;
   currentMusicList$: Observable<Music[]>;
+
   music: string;
   player: YT.Player;
   url = '';
   isPlaying = false;
 
-  constructor(private store: Store<Music[]>, private socketService: SocketService) {
-
-  }
+  constructor(
+    private store: Store<Music[]>,
+    private socketService: SocketService,
+    private musicService: MusicService,
+  ) { }
 
   ngOnInit() {
     this.musicList$ = this.store.pipe(select('musics'));
@@ -87,6 +93,8 @@ export class AdminComponent implements OnInit {
       if (data.length > 0 && this.player && !this.isPlaying) {
         this.player.loadVideoById(data[0].id);
         this.isPlaying = true;
+
+        this.musicService.addFrequentSong(data[0]).subscribe();
       }
     });
   }

@@ -1,9 +1,14 @@
-var bodyParser = require('body-parser');
-var path = require('path');
-var getYoutubeData = require('./youtube-search');
+const bodyParser = require('body-parser');
+const path = require('path');
+const fs = require('fs');
+
+const lowdb = require('lowdb');
+const lowdbFileSync = require('lowdb/adapters/FileSync');
+
+const getYoutubeData = require('./youtube-search');
 
 /*************** CONFIGURATIONS ***************/
-var opts = {
+const opts = {
   maxResults: 12,
   type: 'video',
   key: 'AIzaSyDHH0fQzsUxIiZlpFOQyFaT2s3zBdP2UeA',
@@ -21,16 +26,40 @@ let trendingVideos = {
   items: []
 };
 
+/*************** LOWDB (JSON DB) ***************/
+
+const dbFile = './frequent-songs.json';
+let isExistingFile = true;
+
+try {
+  if (!fs.existsSync(dbFile)) {
+    isExistingFile = false;
+    fs.writeFileSync(dbFile, '{}', 'utf8');
+  }
+} catch (err) {
+  console.error(err);
+}
+
+const lowdbAdapter = new lowdbFileSync(dbFile);
+const db = lowdb(lowdbAdapter);
+
+// Set some defaults (required if your JSON file is empty)
+if (!isExistingFile) {
+  db.defaults({ songs: [] })
+  .write();
+}
+
 /*************** SERVER ***************/
 
 const express = require('express');
 const port = 4444;
 
-var cors = require('cors');
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+const cors = require('cors');
+const app = require('express')();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
+// eslint-disable-next-line no-undef
 app.use(express.static(path.join(__dirname, '/dist')));
 
 // parse application/json
@@ -97,6 +126,56 @@ app.get('/api/trending', (req, res) => {
 
 app.get('/api/list', (req, res) => {
   res.send(videos);
+});
+
+app.post('/api/frequent-songs', (req, res) => {
+  let song = req.body || null;
+
+  if (song && song.id) {
+    try {
+      const isExistingSong = db.get('songs')
+                              .find({ id: song.id })
+                              .value();
+
+      if (isExistingSong) {
+        // Update existing song in db
+        db.get('songs')
+          .find({ id: song.id })
+          .assign({
+            addFrequentSongTime: new Date()
+          })
+          .update('playCount', count => count + 1)
+          .write();
+      } else {
+        // Add new song into db
+        song.playCount = 1;
+        song.addFrequentSongTime = new Date();
+
+        db.get('songs')
+          .push(song)
+          .write();
+      }
+
+      res.send({ isSuccess: true });
+    } catch (err) {
+      throw new Error(err);
+    }
+  } else {
+    res.status(400).send({ isSuccess: false });
+  }
+});
+
+app.get('/api/frequent-songs', (req, res) => {
+  try {
+    const songs = db.get('songs')
+                    .orderBy(['playCount', 'addFrequentSongTime'], ['desc', 'desc'])
+                    .take(20)
+                    .value();
+
+    res.send(songs);
+  } catch (err) {
+    throw new Error(err);
+  }
 });
 
 /*************** WEB SOCKETS ***************/

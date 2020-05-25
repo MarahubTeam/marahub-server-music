@@ -8,4 +8,6 @@ export default class Music {
     publishedAt: string;
     thumbnails: any;
     title: string;
+    playCount?: number;
+    addFrequentSongTime?: Date;
 }

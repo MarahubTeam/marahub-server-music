@@ -7,3 +7,7 @@ export const SearchMusicActionAPI = createAction('[Musics API] Musics Loaded Suc
 export const GetTrendingAction = createAction('[Music] Get Trending Music');
 
 export const GetTrendingActionAPI = createAction('[Music API] Trending Music Loaded Success', props<{ payload: any }>());
+
+export const GetFrequentListAction = createAction('[Music] Get List Frequent Music');
+
+export const GetFrequentListActionAPI = createAction('[Music API] List Frequent Music Loaded Success', props<{ payload: any }>());

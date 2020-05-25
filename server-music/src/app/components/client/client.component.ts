@@ -17,10 +17,14 @@ import { SocketService } from '../../services/socket.service';
 export class ClientComponent implements OnInit {
   musicList$: Observable<Music[]>;
   currentMusicList$: Observable<Music[]>;
+
   music: string;
   url = '';
 
-  constructor(private store: Store<Music[]>, private socketService: SocketService) { }
+  constructor(
+    private store: Store<Music[]>,
+    private socketService: SocketService
+  ) { }
 
   ngOnInit() {
     this.musicList$ = this.store.pipe(select('musics'));
@@ -74,5 +78,9 @@ export class ClientComponent implements OnInit {
 
   getTrending() {
     this.store.dispatch(MusicActions.GetTrendingAction());
+  }
+
+  getFrequentList() {
+    this.store.dispatch(MusicActions.GetFrequentListAction());
   }
 }

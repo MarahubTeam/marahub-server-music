@@ -14,6 +14,9 @@ const reducer = createReducer(
     }),
     on(MusicActions.GetTrendingActionAPI, (state, { payload }) => {
         return [...payload];
+    }),
+    on(MusicActions.GetFrequentListActionAPI, (state, { payload }) => {
+        return [...payload];
     })
 );
 

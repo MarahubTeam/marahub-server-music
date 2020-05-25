@@ -27,4 +27,12 @@ export class MusicService {
   removeMusic() {
     return this.http.get(`${this.url}shift`);
   }
+
+  getFrequentList() {
+    return this.http.get(`${this.url}frequent-songs`);
+  }
+
+  addFrequentSong(song: any) {
+    return this.http.post(`${this.url}frequent-songs`, song);
+  }
 }
