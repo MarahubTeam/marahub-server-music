@@ -36,12 +36,12 @@ export class AdminComponent implements OnInit {
     this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
 
     this.socketService.listen('add-music')
-      .subscribe((data) => {
+      .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });
 
     this.socketService.listen('next-music')
-      .subscribe((data) => {
+      .subscribe(() => {
         this.isPlaying = false;
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });
@@ -100,7 +100,8 @@ export class AdminComponent implements OnInit {
   }
 
   onStateChange(event: any) {
-    if (event.data == 0) {
+    // When the video ends, we should move to next video
+    if (event.data === 0) {
       this.isPlaying = false;
       this.next();
     }
