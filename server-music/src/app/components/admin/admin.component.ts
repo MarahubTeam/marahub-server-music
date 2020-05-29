@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import * as MusicActions from '../../action/music.action';
 import * as CurrentMusicActions from '../../action/current.action';
@@ -14,9 +15,11 @@ import { MusicService } from '../../services/music.service';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
+  musicSub: Subscription;
+
   musicList$: Observable<Music[]>;
-  currentMusicList$: Observable<Music[]>;
+  currentMusicList: Music[] = [];
 
   music: string;
   player: YT.Player;
@@ -31,8 +34,14 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.musicList$ = this.store.pipe(select('musics'));
-    this.currentMusicList$ = this.store.pipe(select('currentMusics'));
 
+    this.musicSub = this.store.pipe(select('currentMusics')).subscribe(
+      (data: Music[]) => {
+        this.currentMusicList = data;
+      }
+    );
+
+    // Get list current music
     this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
 
     this.socketService.listen('add-music')
@@ -57,8 +66,16 @@ export class AdminComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.musicSub.unsubscribe();
+  }
+
+  /******************************/
+
   add(music: Music) {
-    this.socketService.emit('add-music', music);
+    if (!this.currentMusicList.some(curr => curr.id === music.id)) {
+      this.socketService.emit('add-music', music);
+    }
   }
 
   search() {
@@ -89,14 +106,16 @@ export class AdminComponent implements OnInit {
   savePlayer(player: any) {
     this.player = player;
 
-    this.currentMusicList$.subscribe((data) => {
-      if (data.length > 0 && this.player && !this.isPlaying) {
-        this.player.loadVideoById(data[0].id);
-        this.isPlaying = true;
+    this.musicSub = this.store.pipe(select('currentMusics')).subscribe(
+      (data: Music[]) => {
+        if (data.length > 0 && this.player && !this.isPlaying) {
+          this.player.loadVideoById(data[0].id);
+          this.isPlaying = true;
 
-        this.musicService.addFrequentSong(data[0]).subscribe();
+          this.musicService.addFrequentSong(data[0]).subscribe();
+        }
       }
-    });
+    );
   }
 
   onStateChange(event: any) {

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import * as MusicActions from '../../action/music.action';
 import * as CurrentMusicActions from '../../action/current.action';
@@ -14,9 +14,11 @@ import { SocketService } from '../../services/socket.service';
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
+  musicSub: Subscription;
+
   musicList$: Observable<Music[]>;
-  currentMusicList$: Observable<Music[]>;
+  currentMusicList: Music[] = [];
 
   music: string;
   url = '';
@@ -28,7 +30,12 @@ export class ClientComponent implements OnInit {
 
   ngOnInit() {
     this.musicList$ = this.store.pipe(select('musics'));
-    this.currentMusicList$ = this.store.pipe(select('currentMusics'));
+
+    this.musicSub = this.store.pipe(select('currentMusics')).subscribe(
+      (data: Music[]) => {
+        this.currentMusicList = data;
+      }
+    );
 
     // Get list trending music (by default)
     this.getTrending();
@@ -57,8 +64,16 @@ export class ClientComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.musicSub.unsubscribe();
+  }
+
+  /******************************/
+
   add(music: Music) {
-    this.socketService.emit('add-music', music);
+    if (!this.currentMusicList.some(curr => curr.id === music.id)) {
+      this.socketService.emit('add-music', music);
+    }
   }
 
   next() {

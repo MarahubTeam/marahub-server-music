@@ -47,13 +47,14 @@
                 <div class="ml-2">
                   <h5 class="mb-0">{{ music.title }}</h5>
                   <div class="text-muted small">{{ music.channelTitle }}</div>
-                  <div class="text-muted pt-3">{{ music.description | words : 20 }}</div>
+                  <div class="text-muted pt-3">{{ music.description | words : 15 }}</div>
+                  <div class="text-muted small pt-2" *ngIf="music.playCount">Play Counts: <strong>{{ music.playCount }}</strong></div>
                 </div>
             </div>
         </div>
         <div class="col-3 current-list">
             <h4 class="pt-2 pb-2">Danh sách nhạc</h4>
-            <div class="music-item mb-5 d-flex flex-column" *ngFor="let music of (currentMusicList$ | async); let i = index">
+            <div class="music-item mb-5 d-flex flex-column" *ngFor="let music of currentMusicList; let i = index">
                 <img [src]="music.thumbnails.medium.url">
                 <small class="text-duration">{{ music.duration }}</small>
                 <div class="add-button" *ngIf="i > 0" (click)="remove(i)" tooltip="Xóa khỏi list nhạc" placement="left">

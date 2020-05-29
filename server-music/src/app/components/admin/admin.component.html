@@ -35,15 +35,15 @@
 
             <div class="row mb-2">
                 <div class="col-6">
-                    <button *ngIf="(currentMusicList$ | async)[1]" (click)="next()" class="btn btn-primary my-2">Next</button>
+                    <button *ngIf="currentMusicList[1]" (click)="next()" class="btn btn-primary my-2">Next</button>
                 </div>
 
                 <div class="col-6 text-right">
-                    <button *ngIf="(currentMusicList$ | async)[0]" (click)="clearAll()" class="btn btn-danger my-2">Clear All</button>
+                    <button *ngIf="currentMusicList[0]" (click)="clearAll()" class="btn btn-danger my-2">Clear All</button>
                 </div>
             </div>
 
-            <div class="card shadow-sm mb-2" *ngFor="let music of (currentMusicList$ | async); let i = index"
+            <div class="card shadow-sm mb-2" *ngFor="let music of currentMusicList; let i = index"
                 [ngClass]="{'active-music': i === 0}">
                 <div class="card-body">
                     <button type="button" class="close" *ngIf="i > 0" (click)="remove(i)">
