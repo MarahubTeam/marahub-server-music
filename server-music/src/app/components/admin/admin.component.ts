@@ -68,7 +68,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.socketService.listen('change-vol')
       .subscribe((e) => {
-        console.log(e);
         if (this.player) {
           this.player.setVolume(e);
         }
@@ -114,7 +113,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   savePlayer(player: any) {
     this.player = player;
-    this.currentVol = this.player.getVolume();
+    this.player.setVolume(this.currentVol);
     this.socketService.emit('host-vol', this.currentVol); // emit current host volume
 
     this.musicSub = this.store.pipe(select('currentMusics')).subscribe(

@@ -23,7 +23,7 @@
   </form>
 
   <div class="d-flex justify-content-between">
-    <div>
+    <div class="d-flex">
       <button class="btn-header-action btn btn-primary rounded-0 mr-1" tooltip="Thịnh hành" placement="bottom"
         (click)="getTrending()">
         <svg class="bi bi-music-note-beamed" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
@@ -45,9 +45,15 @@
             d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
         </svg>
       </button>
-    </div>
-    <div class="slidecontainer">
-      <input type="range" min="1" max="100" [(ngModel)]="hostVol" class="slider" id="myRange" (ngModelChange)="change()">
+
+      <button class="btn-header-action btn btn-primary rounded-0 mr-1 volumn-btn" tooltip="Volume" placement="bottom">
+        <div class="volumn-pannel">
+          <svg class="bi bi-collection-play" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 -2 25 25" fill="currentColor">
+            <path d="M15 23l-9.309-6h-5.691v-10h5.691l9.309-6v22zm-9-15.009v8.018l8 5.157v-18.332l-8 5.157zm14.228-4.219c2.327 1.989 3.772 4.942 3.772 8.229 0 3.288-1.445 6.241-3.77 8.229l-.708-.708c2.136-1.791 3.478-4.501 3.478-7.522s-1.342-5.731-3.478-7.522l.706-.706zm-2.929 2.929c1.521 1.257 2.476 3.167 2.476 5.299 0 2.132-.955 4.042-2.476 5.299l-.706-.706c1.331-1.063 2.182-2.729 2.182-4.591 0-1.863-.851-3.529-2.184-4.593l.708-.708zm-12.299 1.299h-4v8h4v-8z"/>
+        </svg>
+          <input type="range" min="1" max="100" [(ngModel)]="hostVol" class="slider" id="myRange" (ngModelChange)="change()">
+        </div>
+      </button>
     </div>
   </div>
 

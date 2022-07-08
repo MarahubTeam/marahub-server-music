@@ -70,6 +70,13 @@ export class ClientComponent implements OnInit, OnDestroy {
     .subscribe((e) => {
       this.hostVol = parseInt(e);
     });
+
+    this.socketService.listen('change-vol')
+    .subscribe((e) => {
+      this.hostVol = parseInt(e);
+    });
+
+
   }
 
   ngOnDestroy() {

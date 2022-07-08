@@ -99,8 +99,34 @@
 }
 
 
-.slidecontainer {
-  margin-left: 20px;
+.volumn-btn {
+  &:focus, &:active {
+    box-shadow: none;
+    background-color: inherit !important;
+  }
+  .volumn-pannel {
+      display: flex;
+      align-items: center;
+      svg {
+          margin-right: 0;
+      }
+      input {
+          transition: width 0.2s ease;
+          width: 0;
+          cursor: pointer;
+          opacity: 0;
+      }
+      &:hover {
+          svg {
+              margin-right: 5px;
+          }
+          input {
+          width: 150px;
+          opacity: 1;
+      }
+      }
+  }
+
 }
 
 /* The slider itself */
