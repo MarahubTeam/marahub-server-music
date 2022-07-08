@@ -25,6 +25,7 @@ let trendingVideos = {
   createdTime: '',
   items: []
 };
+let hostVol = 50;
 
 /*************** LOWDB (JSON DB) ***************/
 
@@ -199,6 +200,20 @@ io.on('connection', function(socket){
   socket.on('clear-music', function() {
     videos = [];
     io.emit('clear-music', videos);
+  });
+
+  socket.on('host-vol', function(vol) {
+    hostVol = parseInt(vol);
+    io.emit('host-vol', hostVol);
+  });
+
+  socket.on('get-host-vol', function() {
+    io.emit('host-vol', hostVol);
+  });
+
+  socket.on('change-vol', function(vol) {
+    hostVol = parseInt(vol);
+    io.emit('change-vol', vol);
   });
 });
 

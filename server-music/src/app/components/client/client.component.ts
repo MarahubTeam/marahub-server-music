@@ -22,6 +22,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   music: string;
   url = '';
+  hostVol = 50;
 
   constructor(
     private store: Store<Music[]>,
@@ -62,6 +63,13 @@ export class ClientComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.store.dispatch(CurrentMusicActions.ListCurrentMusicAction());
       });
+
+    this.socketService.emit('get-host-vol');
+
+    this.socketService.listen('host-vol')
+    .subscribe((e) => {
+      this.hostVol = parseInt(e);
+    });
   }
 
   ngOnDestroy() {
@@ -69,6 +77,10 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   /******************************/
+  change() {
+    this.socketService.emit('change-vol', this.hostVol);
+  }
+
 
   add(music: Music) {
     if (!this.currentMusicList.some(curr => curr.id === music.id)) {
