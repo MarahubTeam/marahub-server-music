@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
@@ -11,7 +12,7 @@ const getYoutubeData = require('./youtube-search');
 const opts = {
   maxResults: 12,
   type: 'video',
-  key: 'AIzaSyDHH0fQzsUxIiZlpFOQyFaT2s3zBdP2UeA',
+  key: process.env.YOUTUBE_KEY,
   metadata: {
     duration: true,
     statistics: true
@@ -53,15 +54,13 @@ if (!isExistingFile) {
 /*************** SERVER ***************/
 
 const express = require('express');
-const port = 4444;
+const port = process.env.PORT;
 
 const cors = require('cors');
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-// eslint-disable-next-line no-undef
-app.use(express.static(path.join(__dirname, '/dist')));
 
 // parse application/json
 app.use(bodyParser.json());

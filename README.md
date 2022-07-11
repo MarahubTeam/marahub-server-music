@@ -1,29 +1,19 @@
-# Run with docker
-
-## Docker composer
-
-```
-docker-compose up -d --build
-```
-
-## For development on localhost
+# Development on localhost
 
 1. Server
 
 ```
-cd server-nhac
+cd server
 npm i
-nodemon index.js
+npm start
 ```
 
 2. Client
 
 ```
-cd server-music
+cd client
 npm i
-npm run watch
+npm start
 ```
 
-@note:
-
-When client side run the command `npm run build` or `npm run watch`, it will build client code to `server-nhac/dist`.
+Open http://localhost:4200 and happy coding!

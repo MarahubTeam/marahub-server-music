@@ -11,8 +11,8 @@ import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { MusicReducer } from '../app/reducer/music.reducer';
-import { CurrentMusicReducer } from '../app/reducer/currentMusic.reducer';
+import { MusicReducer } from './reducer/music.reducer';
+import { CurrentMusicReducer } from './reducer/currentMusic.reducer';
 import { MusicEffects } from './effect/music.effect';
 
 // App modules, components
