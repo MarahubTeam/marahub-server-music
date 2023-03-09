@@ -56,10 +56,16 @@
   display: inline-flex;
 }
 
+.thumbnails {
+  position: relative;
+  max-width: 100%;
+  // width: 100px;
+}
+
 .music-item {
   position: relative;
   img {
-    width: 273px;
+    width: 100%;
     cursor: pointer;
   }
 
@@ -69,15 +75,15 @@
     border-radius: 2px;
     padding: 2px;
     color: #fff;
-    top: 131px;
-    left: 246px;
+    bottom: 6px;
+    right: 6px;
     font-size: 70%;
   }
 
   .add-button {
     position: absolute;
-    left: 239px;
-    top: 2px;
+    right: 6px;
+    top: 6px;
     height: 32px;
     width: 32px;
     background: #000;
@@ -94,10 +100,13 @@
   }
 }
 
-.current-list .music-item {
-  width: 273px;
-}
+// .current-list .music-item {
+//   width: 273px;
+// }
 
+.col-3 {
+  max-width: 16%;
+}
 
 .volumn-btn {
   &:focus, &:active {
@@ -147,3 +156,54 @@
   opacity: 1; /* Fully shown on mouse-over */
 }
 
+@media (max-width: 900px) {
+  .current-list {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+  }
+
+  .col-6 {
+    position: relative;
+    max-width: 100%;
+  }
+
+  .row {
+    margin-top: 135px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-9 {
+    max-width: 100%;
+  }
+
+  .thumbnails {
+    max-width: 100%;
+  }
+
+  .music-item {
+    flex-direction: column !important;
+    max-width: 100%;
+  }
+
+  .music-item img {
+    width: 100%;
+  }
+
+  .add-button {
+    opacity: 1 !important;
+  }
+
+  .pt-3, .py-3 {
+    padding-top: 0.5rem!important;
+  }
+
+  .ml-2 {
+    margin-left: 0 !important;
+  }
+}
