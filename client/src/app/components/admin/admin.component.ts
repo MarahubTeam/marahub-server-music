@@ -26,6 +26,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   url = '';
   isPlaying = false;
   currentVol = 50;
+  showModal = false;
 
   constructor(
     private store: Store<Music[]>,
@@ -86,7 +87,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  search() {
+  search(openModal) {
+    this.showModal = openModal ? true : false;
     if (!this.music) {
       return;
     }
@@ -136,4 +138,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeModal() {
+    this.showModal = false;
+  }
 }

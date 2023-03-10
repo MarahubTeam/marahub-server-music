@@ -1,60 +1,113 @@
-<div class="container" style="margin-top:30px">
-    <div class="pricing-header mx-auto text-center">
-        <h1 class="display-4">Âm Nhạc và Cuộc Sống</h1>
+<div class="container-music">
+  <div class="header text-center p-2 mb-4">
+    <div class="title">
+      <h1 class="fst-italic lh-1 mb-4">Âm Nhạc và Cuộc Sống</h1>
     </div>
-    <div class="row">
-        <div class="col-5">
-            <form name="addMusic" (ngSubmit)="search()">
-                <div class="input-group mb-2">
-                    <input [(ngModel)]="music" name="music" class="form-control" placeholder="Tìm gì cũng được">
-                    <span class="mdi mdi-magnify"></span>
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </div>
-            </form>
+    <div class="search-music">
+      <form name="addMusic" class="form-search">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control input-search" name="music" [(ngModel)]="music"
+            placeholder="Tìm gì cũng được..." aria-label="Nhập tên bài hát...">
+          <div class="input-group-append">
+            <button class="btn btn-primary" id="submitButton" type="submit" (click)="search(false)">Tìm kiếm</button>
+            <button class="btn-header-action btn-search btn btn-primary rounded-0" id="submitButtonMobile" type="submit"
+              tooltip="Tìm kiếm" placement="bottom" data-toggle="modal" data-target="#modalSearch"
+              (click)="search(true)">
+              <i class="style-scope icon-searchbox"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"
+                  focusable="false" class="style-scope i"
+                  style="pointer-events: none; display: block; width: 100%; height: 100%;   ">
+                  <g class="style-scope">
+                    <path
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      class="style-scope yt-icon"></path>
+                  </g>
+                </svg>
+              </i>
+            </button>
+          </div>
         </div>
+      </form>
     </div>
-    <div class="row">
-        <div class="col-5">
-            <div class="card shadow-sm mb-1" *ngFor="let music of musicList$ | async">
-                <div class="card-body">
-                    <h5 class="card-title pricing-card-title">{{ music.title }} <small class="text-muted">/ {{ music.duration }}</small></h5>
-                    <div class="text-center">
-                        <img class="img-thumbnail" [src]="music.thumbnails.default.url" (click)="add(music)">
-                    </div>
-                    <button type="button" class="btn btn-sm btn-outline-primary" (click)="add(music)">Add</button>
-                </div>
-            </div>
+  </div>
+
+  <div class="container-fluid music-box row m-0">
+    <div class="col-sm-12 col-md-8 row list-music-search">
+      <div class="col-12 row music-item-search mb-2" *ngFor="let music of musicList$ | async">
+        <div class="music-video col-md-12 col-lg-5 col-xl-4 text-md-left text-lg-right">
+          <img class="music-video-img" [src]="music.thumbnails.medium.url" (click)="add(music)">
         </div>
-
-        <div class="col-2"></div>
-
-        <div class="col-5">
-            <youtube-player [videoId]="url" (ready)="savePlayer($event)" (change)="onStateChange($event)"></youtube-player>
-
-            <div class="row mb-2">
-                <div class="col-6">
-                    <button *ngIf="currentMusicList[1]" (click)="next()" class="btn btn-primary my-2">Next</button>
-                </div>
-
-                <div class="col-6 text-right">
-                    <button *ngIf="currentMusicList[0]" (click)="clearAll()" class="btn btn-danger my-2">Clear All</button>
-                </div>
-            </div>
-
-            <div class="card shadow-sm mb-2" *ngFor="let music of currentMusicList; let i = index"
-                [ngClass]="{'active-music': i === 0}">
-                <div class="card-body">
-                    <button type="button" class="close" *ngIf="i > 0" (click)="remove(i)">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h5 class="card-title pricing-card-title text-muted"><span *ngIf="i===0">▶</span> {{ music.title }} <small>/ {{ music.duration }}</small></h5>
-                    <div class="text-center">
-                        <img [src]="music.thumbnails.default.url">
-                    </div>
-                </div>
-            </div>
+        <div class="music-info col-md-12 col-lg-5 col-xl-6">
+          <div class="music-info-title">
+            <p class="music-title"> {{music.title}} </p>
+            <p> {{music.statistics.viewCount | number}} lượt xem </p>
+          </div>
+          <div class="music-info-action">
+            <button type="button" class="btn btn-sm btn-outline-primary font-weight-bold btn-search"
+              (click)="add(music)">Add</button>
+          </div>
         </div>
+      </div>
     </div>
+
+    <div class="col-sm-12 col-md-4 player-block">
+      <youtube-player [videoId]="url" (ready)="savePlayer($event)" (change)="onStateChange($event)"></youtube-player>
+
+      <div class="row mb-2">
+        <div class="col-6">
+          <button *ngIf="currentMusicList[1]" (click)="next()" class="btn btn-primary my-2">Next</button>
+        </div>
+
+        <div class="col-6 text-right">
+          <button *ngIf="currentMusicList[0]" (click)="clearAll()" class="btn btn-danger my-2">Clear All</button>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-2" *ngFor="let music of currentMusicList; let i = index"
+        [ngClass]="{'active-music': i === 0}">
+        <div class="card-body">
+          <button type="button" class="close" *ngIf="i > 0" (click)="remove(i)">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h5 class="card-title pricing-card-title text-muted"><span *ngIf="i===0">▶</span> {{ music.title }} <small>/
+              {{
+              music.duration }}</small></h5>
+          <div class="text-center">
+            <img [src]="music.thumbnails.default.url">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Search mobile -->
+<div class="modal-music-search" [ngClass]="{'modal-music-search-modal': showModal}" id="modalSearch"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm bài hát</h5>
+      </div>
+      <div class="modal-body modal-body-search">
+        <div class="row music-item-search mt-1 mb-1" *ngFor="let music of musicList$ | async">
+          <div class="music-video col-4">
+            <img class="img-thumbnail music-video-img" [src]="music.thumbnails.default.url" (click)="add(music)">
+          </div>
+          <div class="music-info col-8 row">
+            <div class="music-info-title col-8 p-0">
+              <p class="mb-1"> {{music.title}} </p>
+              <p> {{music.statistics.viewCount | number}} lượt xem </p>
+            </div>
+            <div class="music-info-action col-4">
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="add(music)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Thoát</button>
+      </div>
+    </div>
+  </div>
 </div>

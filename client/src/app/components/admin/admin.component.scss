@@ -1,0 +1,88 @@
+
+
+.header {
+  width: 100%;
+  .title {
+    font-size: 3.5rem;
+  }
+  .search-music {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+.music-box {
+  .list-music-search {
+    .music-item-search {
+      color: #e9ecef!important;
+      .music-video img {
+        object-fit: cover;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+#submitButtonMobile {
+  visibility: hidden;
+}
+
+.modal-body-search {
+  overflow-y: scroll;
+  height: 350px;
+}
+
+.btn-search {
+  height: 38px;
+  width: 50px;
+  border: 2px solid #007bff;
+
+  svg {
+    fill: #ffffff80;
+  }
+
+  &:hover svg {
+    fill: #ffffffbb;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.music-title {
+  font-weight: 500;
+}
+.modal-music-search {
+  display: none;
+}
+@media only screen and (min-width: 769px) {
+  .modal-music-search {
+    display: none;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .list-music-search {
+    display: none;
+  }
+
+  #submitButtonMobile {
+    visibility: visible;
+  }
+  #submitButton {
+    display: none;
+  }
+  .modal-music-search-modal {
+    display: block;
+    color: #495057;
+    top: 0px;
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+  }
+  .music-info-title {
+    font-size: 11px!important;
+  }
+}
+
