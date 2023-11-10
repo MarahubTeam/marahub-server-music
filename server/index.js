@@ -59,8 +59,8 @@ const port = process.env.PORT;
 const cors = require('cors');
 const app = require('express')();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-
+let io;
+io = require('socket.io')(http);
 
 // parse application/json
 app.use(bodyParser.json());
@@ -177,6 +177,20 @@ app.get('/api/frequent-songs', (req, res) => {
     throw new Error(err);
   }
 });
+app.post('/api/add-music', (req, res) => {
+  let music = req.body;
+  if (!music) {
+      return res.status(400).send({ message: 'No music data provided.' });
+  }
+  videos.push(music);
+  io.emit('add-music', videos);
+  res.send({ message: 'Music added successfully.' });
+});
+
+app.post('/api/add-music-youtube-link', (req, res) => {
+  let youtubeLink = req.body;
+
+})
 
 /*************** WEB SOCKETS ***************/
 
