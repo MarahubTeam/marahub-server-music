@@ -10,7 +10,7 @@ const getYoutubeData = require('./youtube-search');
 
 /*************** CONFIGURATIONS ***************/
 const opts = {
-  maxResults: 12,
+  maxResults: 5,
   type: 'video',
   key: process.env.YOUTUBE_KEY,
   metadata: {
