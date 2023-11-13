@@ -189,7 +189,7 @@ app.post('/api/add-music', (req, res) => {
 
 app.post('/api/add-music-youtube-link', (req, res) => {
   const youtubeLink = req.body.youtubeLink;
-  console.log(youtubeLink)
+  // console.log(youtubeLink)
 
   // Extract videoId from youtubeLink
   const videoId = youtubeLink.split('v=')[1];
