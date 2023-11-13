@@ -10,7 +10,7 @@ const getYoutubeData = require('./youtube-search');
 
 /*************** CONFIGURATIONS ***************/
 const opts = {
-  maxResults: 12,
+  maxResults: 5,
   type: 'video',
   key: process.env.YOUTUBE_KEY,
   metadata: {
@@ -59,8 +59,8 @@ const port = process.env.PORT;
 const cors = require('cors');
 const app = require('express')();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-
+let io;
+io = require('socket.io')(http);
 
 // parse application/json
 app.use(bodyParser.json());
@@ -177,6 +177,62 @@ app.get('/api/frequent-songs', (req, res) => {
     throw new Error(err);
   }
 });
+app.post('/api/add-music', (req, res) => {
+  let music = req.body;
+  if (!music) {
+      return res.status(400).send({ message: 'No music data provided.' });
+  }
+  videos.push(music);
+  io.emit('add-music', videos);
+  res.send({ message: 'Music added successfully.' });
+});
+
+app.post('/api/add-music-youtube-link', (req, res) => {
+  const youtubeLink = req.body.youtubeLink;
+  // console.log(youtubeLink)
+
+  // Extract videoId from youtubeLink
+  const videoId = youtubeLink.split('v=')[1];
+
+  // Define YouTube API options
+  const opts = {
+    maxResults: 1,
+    type: 'video',
+    key: process.env.YOUTUBE_KEY,
+    metadata: {
+      duration: true,
+      statistics: true
+    }
+  };
+
+  // Define query parameters
+  const params = {
+    q: videoId,
+    part: opts.part || 'snippet',
+    maxResults: opts.maxResults || 1
+  };
+
+  // Fetch YouTube video data
+  getYoutubeData(opts, 'search', params, function(err, results) {
+    if (err) {
+      console.log(err);
+      res.status(500).send({ message: 'Server error' });
+    } else {
+      // If no results are returned, the video does not exist
+      if (results.length === 0) {
+        res.status(404).send({ message: 'Video does not exist' });
+      } else {
+        // If results are returned, the video exists
+        // Add the video data to the 'videos' array
+        videos.push(results[0]);
+        io.emit('add-music', videos)
+        res.send({ message: 'Video added successfully', video: results[0] });
+        
+      }
+    }
+  });
+});
+
 
 /*************** WEB SOCKETS ***************/
 
