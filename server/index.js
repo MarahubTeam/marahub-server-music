@@ -188,9 +188,51 @@ app.post('/api/add-music', (req, res) => {
 });
 
 app.post('/api/add-music-youtube-link', (req, res) => {
-  let youtubeLink = req.body;
+  const youtubeLink = req.body.youtubeLink;
+  console.log(youtubeLink)
 
-})
+  // Extract videoId from youtubeLink
+  const videoId = youtubeLink.split('v=')[1];
+
+  // Define YouTube API options
+  const opts = {
+    maxResults: 1,
+    type: 'video',
+    key: process.env.YOUTUBE_KEY,
+    metadata: {
+      duration: true,
+      statistics: true
+    }
+  };
+
+  // Define query parameters
+  const params = {
+    q: videoId,
+    part: opts.part || 'snippet',
+    maxResults: opts.maxResults || 1
+  };
+
+  // Fetch YouTube video data
+  getYoutubeData(opts, 'search', params, function(err, results) {
+    if (err) {
+      console.log(err);
+      res.status(500).send({ message: 'Server error' });
+    } else {
+      // If no results are returned, the video does not exist
+      if (results.length === 0) {
+        res.status(404).send({ message: 'Video does not exist' });
+      } else {
+        // If results are returned, the video exists
+        // Add the video data to the 'videos' array
+        videos.push(results[0]);
+        io.emit('add-music', videos)
+        res.send({ message: 'Video added successfully', video: results[0] });
+        
+      }
+    }
+  });
+});
+
 
 /*************** WEB SOCKETS ***************/
 
