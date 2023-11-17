@@ -152,6 +152,8 @@ module.exports = function getYoutubeData (opts, type, params, cb) {
     BASE_URL += 'search?';
   } else if (type === 'trending') {
     BASE_URL += 'videos?';
+  } else if (type === 'video') {
+    BASE_URL += 'videos?';
   }
 
   // Check query parameters

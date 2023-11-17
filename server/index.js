@@ -207,13 +207,13 @@ app.post('/api/add-music-youtube-link', (req, res) => {
 
   // Define query parameters
   const params = {
-    q: videoId,
+    id: videoId,
     part: opts.part || 'snippet',
     maxResults: opts.maxResults || 1
   };
 
   // Fetch YouTube video data
-  getYoutubeData(opts, 'search', params, function(err, results) {
+  getYoutubeData(opts, 'video', params, function(err, results) {
     if (err) {
       console.log(err);
       res.status(500).send({ message: 'Server error' });
