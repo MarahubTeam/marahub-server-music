@@ -10,7 +10,7 @@ const getYoutubeData = require('./youtube-search');
 
 /*************** CONFIGURATIONS ***************/
 const opts = {
-  maxResults: 5,
+  maxResults: 20,
   type: 'video',
   key: process.env.YOUTUBE_KEY,
   metadata: {
@@ -85,10 +85,15 @@ app.use(function (req, res, next) {
 /***************APIs ***************/
 
 app.get('/api/search', (req, res) => {
+  let maxResults = opts.maxResults;
+  if (req.query.maxResults) {
+    maxResults = req.query.maxResults > opts.maxResults ? opts.maxResults : req.query.maxResults;
+  }
+  
   const queryParams = {
     q: req.query.q,
     part: opts.part || 'snippet',
-    maxResults: opts.maxResults || 30
+    maxResults
   };
 
   getYoutubeData(opts, 'search', queryParams, function(err, results) {
